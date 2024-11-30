@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "225707720959",
+    "project_id": "child-teaching-app",
+    "storage_bucket": "child-teaching-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:225707720959:android:6036ca3e2ce075ef994cca",
+        "android_client_info": {
+          "package_name": "com.example.read_right"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZFRXtFbmzbOtO0qafzB3Po85K_zXeLsM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
