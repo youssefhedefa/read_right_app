@@ -113,6 +113,7 @@ class _ResultContainerState extends State<ResultContainer> {
       }
     }
 
+
     // If comparison has more words than original
     if (comparisonWords.length > originalWords.length) {
       wrongWords += comparisonWords.length - originalWords.length;
