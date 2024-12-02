@@ -2,6 +2,7 @@ import 'package:audio_waveforms/audio_waveforms.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:read_right/core/components/widgets/custom_button.dart';
 import 'package:read_right/core/components/widgets/custom_input_field.dart';
@@ -62,7 +63,17 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
     recordController = RecorderController();
     player = AudioPlayer();
     textController = TextEditingController();
+    fetchClipBoard();
     super.initState();
+  }
+
+  fetchClipBoard() async {
+    Clipboard.getData('text/plain').then(
+        (value){
+          print(value);
+          textController.text = value!.text!;
+        }
+    );
   }
 
   @override
