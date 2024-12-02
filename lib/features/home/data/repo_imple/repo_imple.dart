@@ -90,7 +90,7 @@ class HomeRepoImple extends HomeRepo {
 
   @override
   Future<Either<Failure, String>> checkRecord(
-      {required String path, required String locale}) async {
+      {required String path, required Locale locale}) async {
     try {
       String audioUrl = await remoteDataSource.storeAudioToAudioBucket(path);
       audioUrl = audioUrl.replaceFirst('test_audio/', '');

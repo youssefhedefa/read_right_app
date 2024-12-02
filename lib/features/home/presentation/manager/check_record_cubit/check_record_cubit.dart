@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:read_right/features/home/domain/repo/home_repo.dart';
 import 'package:read_right/features/home/presentation/manager/check_record_cubit/check_record_state.dart';
@@ -12,7 +14,7 @@ class CheckRecordCubit extends Cubit<CheckRecordState> {
           ),
         );
 
-  checkRecord({required String path, required String locale}) async {
+  checkRecord({required String path, required Locale locale}) async {
     emit(
       state.copyWith(
         state: CheckRecordEnum.loading,

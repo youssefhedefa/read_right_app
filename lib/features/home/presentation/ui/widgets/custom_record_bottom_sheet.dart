@@ -167,7 +167,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                   print('object');
                   context.read<CheckRecordCubit>().checkRecord(
                     path: path,
-                    locale: context.locale.languageCode,
+                    locale: context.locale,
                   );
                 },
                 label: context.checkVoice,

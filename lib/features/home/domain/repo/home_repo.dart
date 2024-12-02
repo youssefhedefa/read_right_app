@@ -6,6 +6,6 @@ import 'package:read_right/features/home/domain/entities/book_entity.dart';
 abstract class HomeRepo {
   Future<Either<Failure, List<BooksEntity>>> getRecommendedBooks({required Locale locale});
   Future<Either<Failure, List<BooksEntity>>> getNewestBooks({required Locale locale});
-  Future<Either<Failure, String>> checkRecord({required String path, required String locale});
+  Future<Either<Failure, String>> checkRecord({required String path, required Locale locale});
   Future<Either<Failure, String>> saveWords({required int correctWords, required int wrongWords});
 }
