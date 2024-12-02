@@ -1,10 +1,13 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:read_right/core/components/widgets/custom_button.dart';
 import 'package:read_right/core/helpers/color_helper.dart';
 import 'package:read_right/core/helpers/context_tr_extension.dart';
 import 'package:read_right/features/home/presentation/manager/save_words_cubit/save_words_cubit.dart';
 import 'package:read_right/features/home/presentation/manager/save_words_cubit/save_words_state.dart';
+//import 'package:text_to_speech/text_to_speech.dart';
 
 class ResultContainer extends StatefulWidget {
   const ResultContainer(
@@ -19,10 +22,11 @@ class ResultContainer extends StatefulWidget {
 
 class _ResultContainerState extends State<ResultContainer> {
   late Map<String, int> result;
-
+  late FlutterTts tts;
   @override
   void initState() {
     result = checkWords(widget.originalWords, widget.comparisonWords);
+    tts = FlutterTts();
     super.initState();
   }
 
@@ -40,8 +44,38 @@ class _ResultContainerState extends State<ResultContainer> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('${context.originalWords}: ${widget.originalWords}'),
-          Text('${context.comparisonWords}: ${widget.comparisonWords}'),
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  '${context.originalWords}: ${widget.originalWords}',
+                ),
+              ),
+              IconButton(
+                onPressed: () async {
+                  await tts.setLanguage(context.locale.languageCode);
+                  await tts.speak(widget.originalWords);
+                },
+                icon: const Icon(Icons.volume_up),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  '${context.comparisonWords}: ${widget.comparisonWords}',
+                ),
+              ),
+              IconButton(
+                onPressed: () async {
+                  await tts.setLanguage(context.locale.languageCode);
+                  await tts.speak(widget.comparisonWords);
+                },
+                icon: const Icon(Icons.volume_up),
+              ),
+            ],
+          ),
           const Divider(
             color: Colors.grey,
           ),
@@ -101,6 +135,9 @@ class _ResultContainerState extends State<ResultContainer> {
     List<String> originalWords = original.split(' ');
     List<String> comparisonWords = comparison.split(' ');
 
+    originalWords = originalWords.map((e) => e.replaceAll(RegExp(r'[.,!?]'), '')).toList();
+    comparisonWords = comparisonWords.map((e) => e.replaceAll(RegExp(r'[.,!?]'), '')).toList();
+
     int correctWords = 0;
     int wrongWords = 0;
 
@@ -112,7 +149,6 @@ class _ResultContainerState extends State<ResultContainer> {
         wrongWords++;
       }
     }
-
 
     // If comparison has more words than original
     if (comparisonWords.length > originalWords.length) {
