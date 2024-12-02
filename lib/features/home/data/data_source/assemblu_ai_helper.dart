@@ -24,7 +24,7 @@ class AssemblyAiHelper {
     // return transcription.id;
     final transcription = await assApi.submitTranscription({
       'audio_url': audioUrl,
-      'language_code': 'en-US',
+      'language_code': 'en',
       'punctuate': true,
     });
     return transcription.id;
