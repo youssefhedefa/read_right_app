@@ -5,6 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:read_right/core/helpers/app_constances.dart';
 import 'package:read_right/core/helpers/color_helper.dart';
 import 'package:read_right/core/routing/routing_constances.dart';
+import 'package:read_right/core/theme/theme_cubit.dart';
+import 'package:read_right/core/theme/theme_state.dart';
 import 'package:read_right/features/home/domain/entities/book_entity.dart';
 import 'package:read_right/features/home/presentation/manager/all_books_view_cubit/all_books_view_cubit.dart';
 import 'package:read_right/features/home/presentation/manager/all_books_view_cubit/all_books_view_state.dart';
@@ -96,9 +98,13 @@ class CategoryItem extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
-            color: AppColorHelper.primary,
+            color: AppColorHelper.primary(
+              isMale: context.read<ThemeCubit>().state.gender.isMale,
+            ),
           ),
-          color: isSelected ? AppColorHelper.primary : Colors.transparent,
+          color: isSelected ?AppColorHelper.primary(
+            isMale: context.read<ThemeCubit>().state.gender.isMale,
+          ) : Colors.transparent,
         ),
         child: Center(
           child: Text(

@@ -37,12 +37,16 @@ class AppRoutingManager {
           ),
         );
       case AppRoutingConstances.preSetting:
+        final params = settings.arguments as Map<String, dynamic>;
         return CustomPageRoute(
           axisDirection: AxisDirection.left,
           child: BlocProvider(
             create: (context) => getIt<PreSettingCubit>(),
-              child: const Scaffold(
-                body: PreSettingView(),
+              child: Scaffold(
+                body: PreSettingView(
+                  password: params['password'] as String,
+                  email: params['email'] as String,
+                ),
               ),
           ),
         );
@@ -51,7 +55,7 @@ class AppRoutingManager {
           axisDirection: AxisDirection.left,
           child: BlocProvider(
             create: (context) => getIt<ProfileCubit>()..getProfileData()..fetchUserSavedBooks(),
-              child: AppManagerView(),
+              child: const AppManagerView(),
           ),
         );
       case AppRoutingConstances.allBooks:

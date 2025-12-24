@@ -14,60 +14,169 @@ import 'package:read_right/core/helpers/color_helper.dart';
 import 'package:read_right/core/helpers/context_tr_extension.dart';
 import 'package:read_right/core/helpers/image_helper.dart';
 import 'package:read_right/core/routing/routing_constances.dart';
+import 'package:read_right/core/theme/theme_cubit.dart';
+import 'package:read_right/core/theme/theme_state.dart';
 import 'package:read_right/features/app_auth/presentation/manager/pre_setting_cubit/pre_setting_cubit.dart';
 import 'package:read_right/features/app_auth/presentation/manager/pre_setting_cubit/pre_setting_state.dart';
 
 class PreSettingView extends StatelessWidget {
-  const PreSettingView({super.key});
+  const PreSettingView({super.key, required this.password, required this.email});
+
+  final String password;
+  final String email;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: AppColorHelper.primary,
+        backgroundColor: AppColorHelper.primary(
+          isMale: context.watch<ThemeCubit>().state.gender.isMale,
+        ),
+      ),
+      bottomSheet: BlocConsumer<PreSettingCubit, PreSettingState>(
+        builder: (context, state) {
+          if (state.preSettingEnum == PreSettingEnum.loading) {
+            return Container(
+              margin: const EdgeInsets.all(16),
+              child: CustomButton(
+                onPressed: () {
+                  //advanceButton(context: context);
+                },
+                label: context.advance,
+                isLoading: true,
+              ),
+            );
+          }
+          return Container(
+            margin: const EdgeInsets.all(16),
+            child: CustomButton(
+              onPressed: () {
+                advanceButton(context: context);
+              },
+              label: context.advance,
+              isLoading: false,
+            ),
+          );
+        },
+        listener: (context, state) {
+          if (state.preSettingEnum == PreSettingEnum.success) {
+            // Update theme based on gender
+            context.read<ThemeCubit>().updateTheme(state.gender);
+            Navigator.of(context).pushNamed(AppRoutingConstances.appManager);
+          }
+        },
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 18),
-        child: Column(
-          children: [
-            ClickableContainer(
-              text: context.languageLabel,
-              icon: Icons.language,
-              onTap: () {
-                showLanguageButtomSheet(context);
-              },
-            ),
-            const SizedBox(height: 16),
-            CustomAppInputField(
-              hintText: context.nameHint,
-              icon: Icons.person,
-              isPassword: false,
-              controller: context.read<PreSettingCubit>().nameController,
-            ),
-            const SizedBox(height: 16),
-            BlocBuilder<PreSettingCubit, PreSettingState>(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              ClickableContainer(
+                text: context.languageLabel,
+                icon: Icons.language,
+                onTap: () {
+                  showLanguageButtomSheet(context);
+                },
+              ),
+              const SizedBox(height: 16),
+              CustomAppInputField(
+                hintText: context.nameHint,
+                icon: Icons.person,
+                isPassword: false,
+                controller: context.read<PreSettingCubit>().nameController,
+              ),
+              const SizedBox(height: 16),
+              BlocBuilder<PreSettingCubit, PreSettingState>(
                 builder: (context, state) {
-              if (state.imageUrl != null) {
+                  return Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: Colors.transparent,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          context.genderLabel,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              flex: 47,
+                              child: RadioListTile<String>(
+                                title: Text(context.male),
+                                contentPadding: EdgeInsets.zero,
+                                value: 'male',
+                                groupValue: state.gender,
+                                activeColor: AppColorHelper.primaryMale,
+                                onChanged: (value) {
+                                  if (value != null) {
+                                    context
+                                        .read<PreSettingCubit>()
+                                        .setGender(value);
+                                    context
+                                        .read<ThemeCubit>()
+                                        .updateThemeByGender(Gender.male);
+                                  }
+                                },
+                              ),
+                            ),
+                            Expanded(
+                              flex: 53,
+                              child: RadioListTile<String>(
+                                title: Text(context.female),
+                                contentPadding: EdgeInsets.zero,
+                                value: 'female',
+                                groupValue: state.gender,
+                                activeColor: AppColorHelper.primaryFemale,
+                                onChanged: (value) {
+                                  if (value != null) {
+                                    context
+                                        .read<PreSettingCubit>()
+                                        .setGender(value);
+                                    context
+                                        .read<ThemeCubit>()
+                                        .updateThemeByGender(Gender.female);
+                                  }
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(height: 16),
+              BlocBuilder<PreSettingCubit, PreSettingState>(
+                  builder: (context, state) {
+                if (state.imageUrl != null) {
+                  return ClickableContainer(
+                    text: context.profileImageUploadSuccess,
+                    icon: Icons.image,
+                    onTap: () {
+                      //showImageSourceButtomSheet(context);
+                    },
+                  );
+                }
                 return ClickableContainer(
-                  text: context.profileImageUploadSuccess,
+                  text: context.profileImageUpload,
                   icon: Icons.image,
                   onTap: () {
-                    //showImageSourceButtomSheet(context);
+                    showImageSourceButtomSheet(context);
                   },
                 );
-              }
-              return ClickableContainer(
-                text: context.profileImageUpload,
-                icon: Icons.image,
-                onTap: () {
-                  showImageSourceButtomSheet(context);
-                },
-              );
-            }),
-            const SizedBox(height: 16),
-            BlocBuilder<PreSettingCubit,PreSettingState>(
-              builder: (context,state) {
+              }),
+              const SizedBox(height: 16),
+              BlocBuilder<PreSettingCubit, PreSettingState>(
+                  builder: (context, state) {
                 if (state.audioUrl != null) {
                   return ClickableContainer(
                     text: context.audioUploadSuccess,
@@ -84,36 +193,9 @@ class PreSettingView extends StatelessWidget {
                     showCustomRecordBottomSheet(context: context);
                   },
                 );
-              }
-            ),
-            const Spacer(),
-            BlocConsumer<PreSettingCubit, PreSettingState>(
-              builder: (context, state) {
-                if (state.preSettingEnum == PreSettingEnum.loading) {
-                  return CustomButton(
-                    onPressed: () {
-                      //advanceButton(context: context);
-                    },
-                    label: context.advance,
-                    isLoading: true,
-                  );
-                }
-                return CustomButton(
-                  onPressed: () {
-                    advanceButton(context: context);
-                  },
-                  label: context.advance,
-                  isLoading: false,
-                );
-              },
-              listener: (context, state) {
-                if (state.preSettingEnum == PreSettingEnum.success) {
-                  Navigator.of(context)
-                      .pushNamed(AppRoutingConstances.appManager);
-                }
-              },
-            ),
-          ],
+              }),
+            ],
+          ),
         ),
       ),
     );
@@ -274,9 +356,12 @@ class PreSettingView extends StatelessWidget {
       return;
     }
     context.read<PreSettingCubit>().createUser(
+          password: password,
+          email: email,
           name: context.read<PreSettingCubit>().nameController.text,
           imageUrl: context.read<PreSettingCubit>().state.imageUrl!,
           audioUrl: context.read<PreSettingCubit>().state.audioUrl!,
+          gender: context.read<PreSettingCubit>().state.gender,
         );
   }
 }

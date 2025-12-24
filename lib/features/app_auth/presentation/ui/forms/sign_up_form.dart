@@ -44,16 +44,18 @@ class SignUpForm extends StatelessWidget {
                 validationMessage: context.rePasswordErrorHint,
                 icon: FontAwesomeIcons.lock,
                 isPassword: true,
-                controller: context.read<SignUpCubit>().passwordConfirmController,
+                controller:
+                    context.read<SignUpCubit>().passwordConfirmController,
               ),
               const SizedBox(height: 24),
-              BlocConsumer<SignUpCubit,SignUpState>(
-                builder: (context,state) {
-                  if(state is SignUpLoadingState){
+              BlocConsumer<SignUpCubit, SignUpState>(
+                builder: (context, state) {
+                  if (state is SignUpLoadingState) {
                     return CustomButton(
                       onPressed: () {},
                       label: context.signUpButtonLabel,
                       isLoading: true,
+                      isStart: true,
                     );
                   }
                   return CustomButton(
@@ -62,11 +64,27 @@ class SignUpForm extends StatelessWidget {
                     },
                     label: context.signUpButtonLabel,
                     isLoading: false,
+                    isStart: true,
                   );
                 },
-                listener: (context,state){
-                  if(state is SignUpSuccessState){
-                    Navigator.pushNamed(context, AppRoutingConstances.preSetting);
+                listener: (context, state) {
+                  if (state is SignUpSuccessState) {
+                    Navigator.pushNamed(
+                      context,
+                      AppRoutingConstances.preSetting,
+                      arguments: {
+                        'email':
+                            context.read<SignUpCubit>().emailController.text,
+                        'password':
+                            context.read<SignUpCubit>().passwordController.text,
+                      },
+                    );
+                  } else if (state is SignUpErrorState) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(state.message),
+                      ),
+                    );
                   }
                 },
               ),
@@ -84,9 +102,11 @@ class SignUpForm extends StatelessWidget {
       ),
     );
   }
-  signUpAction(BuildContext context){
-    if(context.read<SignUpCubit>().formKey.currentState!.validate()){
-      if(context.read<SignUpCubit>().passwordController.text != context.read<SignUpCubit>().passwordConfirmController.text){
+
+  signUpAction(BuildContext context) {
+    if (context.read<SignUpCubit>().formKey.currentState!.validate()) {
+      if (context.read<SignUpCubit>().passwordController.text !=
+          context.read<SignUpCubit>().passwordConfirmController.text) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(context.rePasswordErrorHint),
@@ -96,7 +116,7 @@ class SignUpForm extends StatelessWidget {
         context.read<SignUpCubit>().passwordConfirmController.clear();
         return;
       }
-      if(context.read<SignUpCubit>().passwordController.text.length < 6){
+      if (context.read<SignUpCubit>().passwordController.text.length < 6) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(context.passwordLengthErrorHint),
@@ -118,10 +138,11 @@ class SignUpForm extends StatelessWidget {
         return;
       }
       context.read<SignUpCubit>().signUp(
-        email: context.read<SignUpCubit>().emailController.text,
-        password: context.read<SignUpCubit>().passwordController.text,
-        confirmPassword: context.read<SignUpCubit>().passwordConfirmController.text,
-      );
+            email: context.read<SignUpCubit>().emailController.text,
+            password: context.read<SignUpCubit>().passwordController.text,
+            confirmPassword:
+                context.read<SignUpCubit>().passwordConfirmController.text,
+          );
     }
   }
 }

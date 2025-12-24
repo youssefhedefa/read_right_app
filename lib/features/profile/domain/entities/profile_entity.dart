@@ -6,6 +6,7 @@ class ProfileEntity {
   final int totalWords;
   final int correctWords;
   final int wrongWords;
+  final String? gender;
 
 
   ProfileEntity({
@@ -16,5 +17,6 @@ class ProfileEntity {
     required this.correctWords,
     required this.wrongWords,
     required this.savedBooks,
+    this.gender,
   });
 }

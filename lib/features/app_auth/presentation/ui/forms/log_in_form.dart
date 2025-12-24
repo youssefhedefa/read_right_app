@@ -39,13 +39,14 @@ class LogInForm extends StatelessWidget {
                 controller: context.read<LogInCubit>().passwordController,
               ),
               const SizedBox(height: 24),
-              BlocConsumer<LogInCubit,LogInState>(
-                builder: (context,state) {
-                  if(state is LogInLoadingState){
+              BlocConsumer<LogInCubit, LogInState>(
+                builder: (context, state) {
+                  if (state is LogInLoadingState) {
                     return CustomButton(
                       onPressed: () {},
                       label: context.logInButtonLabel,
                       isLoading: true,
+                      isStart: true,
                     );
                   }
                   return CustomButton(
@@ -54,13 +55,15 @@ class LogInForm extends StatelessWidget {
                     },
                     label: context.logInButtonLabel,
                     isLoading: false,
+                    isStart: true,
                   );
                 },
-                listener: (context,state){
-                  if(state is LogInSuccessState){
-                    Navigator.pushNamed(context, AppRoutingConstances.appManager);
+                listener: (context, state) {
+                  if (state is LogInSuccessState) {
+                    Navigator.pushNamed(
+                        context, AppRoutingConstances.appManager);
                   }
-                  if(state is LogInErrorState){
+                  if (state is LogInErrorState) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(state.message),
@@ -83,9 +86,10 @@ class LogInForm extends StatelessWidget {
       ),
     );
   }
-  logInAction(BuildContext context){
-    if(context.read<LogInCubit>().formKey.currentState!.validate()){
-      if(context.read<LogInCubit>().passwordController.text.length < 6){
+
+  logInAction(BuildContext context) {
+    if (context.read<LogInCubit>().formKey.currentState!.validate()) {
+      if (context.read<LogInCubit>().passwordController.text.length < 6) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(context.passwordLengthErrorHint),
@@ -107,9 +111,9 @@ class LogInForm extends StatelessWidget {
         return;
       }
       context.read<LogInCubit>().logIn(
-        email: context.read<LogInCubit>().emailController.text,
-        password: context.read<LogInCubit>().passwordController.text,
-      );
+            email: context.read<LogInCubit>().emailController.text,
+            password: context.read<LogInCubit>().passwordController.text,
+          );
     }
   }
 }

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:read_right/core/components/widgets/custom_button.dart';
 import 'package:read_right/core/helpers/color_helper.dart';
 import 'package:read_right/core/helpers/context_tr_extension.dart';
 import 'package:read_right/core/helpers/text_style_helper.dart';
 import 'package:read_right/core/routing/routing_constances.dart';
+import 'package:read_right/core/theme/theme_cubit.dart';
+import 'package:read_right/core/theme/theme_state.dart';
 import 'package:read_right/features/home/domain/entities/book_entity.dart';
 
 class BookDetailsView extends StatelessWidget {
@@ -29,7 +32,9 @@ class BookDetailsView extends StatelessWidget {
             Navigator.pop(context);
           },
         ),
-        backgroundColor: AppColorHelper.primary,
+        backgroundColor: AppColorHelper.primary(
+          isMale: context.read<ThemeCubit>().state.gender.isMale,
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(

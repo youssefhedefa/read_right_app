@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -22,16 +23,24 @@ class PreSettingCubit extends Cubit<PreSettingState> {
   final AuthRepo authRepo;
   final TextEditingController nameController = TextEditingController();
 
+  void setGender(String gender) {
+    emit(state.copyWith(gender: gender));
+  }
+
   createUser({
     required String name,
     required String imageUrl,
     required String audioUrl,
+    required String gender,
+    required String password,
+    required String email,
   }) async {
     emit(state.copyWith(preSettingEnum: PreSettingEnum.loading));
     final res = await authRepo.preSetting(
+      password: password,
       user: UserModel(
-        id: auth.currentUser!.uid,
-        email: auth.currentUser!.email!,
+        id: '',
+        email: email,
         name: name,
         image: imageUrl,
         audio: audioUrl,
@@ -39,6 +48,7 @@ class PreSettingCubit extends Cubit<PreSettingState> {
         wrongWords: 0,
         correctWords: 0,
         myBooks: [],
+        gender: gender,
       ),
     );
     res.fold(

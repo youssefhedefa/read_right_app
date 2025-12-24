@@ -8,7 +8,7 @@ abstract class AuthRepo {
   Future<Either<Failure, dynamic>> logIn(
       {required String email,required String password});
 
-  Future<Either<Failure, dynamic>> preSetting({required UserModel user});
+  Future<Either<Failure, dynamic>> preSetting({required UserModel user,required String password});
 
   Future<Either<Failure, dynamic>> uploadImage({required String path});
 

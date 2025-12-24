@@ -38,6 +38,7 @@ dependencies:
   cloud_firestore: ^5.5.0
   image_picker: ^1.1.2
   flutter_tts: ^4.2.0
+  shared_preferences: ^2.2.2
 
 
 dev_dependencies:
@@ -54,7 +55,6 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/icons/
     - assets/images/
     - assets/translations/
     - assets/fonts/

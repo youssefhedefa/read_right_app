@@ -10,6 +10,8 @@ import 'package:read_right/core/helpers/color_helper.dart';
 import 'package:read_right/core/helpers/context_tr_extension.dart';
 import 'package:read_right/core/helpers/image_helper.dart';
 import 'package:read_right/core/helpers/text_style_helper.dart';
+import 'package:read_right/core/theme/theme_cubit.dart';
+import 'package:read_right/core/theme/theme_state.dart';
 
 class AppManagerView extends StatelessWidget {
   const AppManagerView({super.key});
@@ -23,9 +25,16 @@ class AppManagerView extends StatelessWidget {
         return Scaffold(
           resizeToAvoidBottomInset: false,
           appBar: AppBar(
-            backgroundColor: AppColorHelper.lightPrimary,
-            foregroundColor: AppColorHelper.lightPrimary,
-            surfaceTintColor: AppColorHelper.lightPrimary,
+            backgroundColor: AppColorHelper.primary(
+              isMale: context.read<ThemeCubit>().state.gender.isMale,
+            ),
+            foregroundColor: AppColorHelper.primary(
+              isMale: context.read<ThemeCubit>().state.gender.isMale,
+            ),
+            surfaceTintColor: AppColorHelper.primary(
+              isMale: context.read<ThemeCubit>().state.gender.isMale,
+            ),
+            automaticallyImplyLeading: false,
             title: BlocBuilder<ProfileCubit, ProfileDataState>(
                 bloc: getIt<ProfileCubit>()..getProfileData(),
                 builder: (context, state) {
@@ -42,6 +51,12 @@ class AppManagerView extends StatelessWidget {
                     );
                   }
                   if (state.status == ProfileDataStatus.success) {
+                    // Update theme based on user's gender when profile loads
+                    if (state.profileData != null) {
+                      context
+                          .read<ThemeCubit>()
+                          .updateTheme(state.profileData!.gender!);
+                    }
                     return Text(
                       '${context.hi}, ${state.profileData!.name}',
                       style: AppTextStyleHelper.font18SemiBoldWhite,
@@ -51,15 +66,19 @@ class AppManagerView extends StatelessWidget {
                     context.hi,
                     style: AppTextStyleHelper.font18SemiBoldWhite,
                   );
-                }
-                ),
+                }),
             actions: [
               Image.asset(
-                AppImageHelper.appBarImage,
+                AppImageHelper.appBarImage(
+                  context.read<ThemeCubit>().state.gender.isMale,
+                ),
+              ),
+              const SizedBox(
+                width: 16,
               )
             ],
           ),
-          bottomNavigationBar: CustomBottomNavBar(),
+          bottomSheet: const CustomBottomNavBar(),
           body: context.read<AppManagerCubit>().views[state.viewIndex],
         );
       }),

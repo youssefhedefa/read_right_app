@@ -3,18 +3,17 @@ import 'dart:ui';
 import 'package:assemblyai_flutter_sdk/assemblyai_flutter_sdk.dart';
 
 class AssemblyAiHelper {
-  final assApi = AssemblyAI('68021e31c46b437f8c43c9af005f424e');
+  final assApi = AssemblyAI('3f2af4a5c112490796e4f5d8583ce896');
 
   Future<String> makeRequest(
       {required String audioUrl, required Locale locale}) async {
-
-    if(locale.languageCode == 'ar'){
+    if (locale.languageCode == 'ar') {
       return arabicTranscription(audioUrl: audioUrl);
     }
     return englishTranscription(audioUrl: audioUrl);
   }
 
-  Future<String> englishTranscription({required String audioUrl }) async {
+  Future<String> englishTranscription({required String audioUrl}) async {
     // final transcription = await assApi.submitTranscription({
     //   'audio_url': audioUrl,
     //   'language_code': locale,
@@ -30,7 +29,7 @@ class AssemblyAiHelper {
     return transcription.id;
   }
 
-  Future<String> arabicTranscription({required String audioUrl }) async {
+  Future<String> arabicTranscription({required String audioUrl}) async {
     final transcription = await assApi.submitTranscription({
       'audio_url': audioUrl,
       'language_code': 'ar',
@@ -43,7 +42,8 @@ class AssemblyAiHelper {
   Future<dynamic> checkTranscription(String id) async {
     final transcription = await assApi.getTranscription(id);
     print(transcription.status);
-    if (transcription.status == 'processing' || transcription.status == 'queued') {
+    if (transcription.status == 'processing' ||
+        transcription.status == 'queued') {
       Future.delayed(
         const Duration(seconds: 2),
       );

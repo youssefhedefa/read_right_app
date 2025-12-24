@@ -24,6 +24,7 @@ class PreSettingState {
   String? errorMessage;
   String? audioUrl;
   String? imageUrl;
+  String gender;
   PreSettingState({
     required this.preSettingEnum,
     required this.audioPreSettingEnum,
@@ -31,6 +32,7 @@ class PreSettingState {
     this.errorMessage,
     this.audioUrl,
     this.imageUrl,
+    this.gender = 'male',
   });
 
   PreSettingState copyWith({
@@ -38,6 +40,7 @@ class PreSettingState {
     AudioPreSettingEnum? audioPreSettingEnum,
     ImagePreSettingEnum? imagePreSettingEnum,
     String? message,
+    String? gender,
     String? audioUrl,
     String? imageUrl,
   }) {
@@ -46,6 +49,7 @@ class PreSettingState {
       audioPreSettingEnum: audioPreSettingEnum ?? this.audioPreSettingEnum,
       imagePreSettingEnum: imagePreSettingEnum ?? this.imagePreSettingEnum,
       errorMessage: message,
+      gender: gender ?? this.gender,
       audioUrl: audioUrl,
       imageUrl: imageUrl,
     );

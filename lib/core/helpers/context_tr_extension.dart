@@ -34,6 +34,9 @@ extension translation on BuildContext {
   String get profileBannerError => tr('profile_banner_error');
   String get advance => tr('advance');
   String get sayHello => tr('say_hello');
+  String get genderLabel => tr('gender_label');
+  String get male => tr('male');
+  String get female => tr('female');
   String get homeViewLabel => tr('home_view_label');
   String get searchViewLabel => tr('search_view_label');
   String get myLibraryViewLabel => tr('my_library_view_label');

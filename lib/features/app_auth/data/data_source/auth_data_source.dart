@@ -112,4 +112,13 @@ class AuthDataSource {
     await docReference.update(books);
     return savedBooks;
   }
+
+  // create funstion to take email and look up if the email exists in firebase authentication
+  Future<bool> checkIfEmailExists({required String email}) async {
+    var userCollection = getUserCollection();
+    var querySnapshot = await userCollection
+        .where('email', isEqualTo: email)
+        .get();
+    return querySnapshot.docs.isNotEmpty;
+  }
 }

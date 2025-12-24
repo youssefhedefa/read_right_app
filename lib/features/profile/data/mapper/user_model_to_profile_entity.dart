@@ -13,6 +13,7 @@ abstract class UserModelToProfileEntity {
       correctWords: user.correctWords,
       totalWords: user.totalWords,
       savedBooks: user.myBooks,
+      gender: user.gender,
     );
   }
 

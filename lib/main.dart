@@ -11,8 +11,8 @@ import 'firebase_options.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Supabase.initialize(
-    url: 'https://fpkruuuyuzcuuxntdcyy.supabase.co',
-    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZwa3J1dXV5dXpjdXV4bnRkY3l5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzI5MDQ4NzIsImV4cCI6MjA0ODQ4MDg3Mn0.8zAzAO6LcyIFLu5gso9_ewww2vRS2TOYCnQiV5DuQhE',
+    url: 'https://jpynukrpuogqmbypivcq.supabase.co',
+    anonKey: 'sb_publishable_8Yv2FLVmI4Zu7efQ18-NXQ_qnK8XcPS',
   );
 
   await Firebase.initializeApp(
@@ -29,7 +29,7 @@ void main() async {
         Locale('ar'),
       ],
       path:
-          'assets/translations', // <-- change the path of the translation files
+          'assets/translations',
       child: const ReadRightApp(),
     ),
   );

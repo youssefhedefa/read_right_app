@@ -26,7 +26,8 @@ class AuthView extends StatelessWidget {
             ),
             Text(
               formTitle,
-              style: AppTextStyleHelper.font22BoldPrimary,
+              style:
+                  AppTextStyleHelper.font22BoldPrimary(context, isStart: true),
             ),
             const SizedBox(
               height: 20,

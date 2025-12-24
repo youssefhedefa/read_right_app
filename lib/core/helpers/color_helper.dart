@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 
-abstract class AppColorHelper{
+abstract class AppColorHelper {
   // static const Color primary = Color(0xFFB44343);
-  static const Color primary = Color(0xFFF58B1B);
-  static const Color lightPrimary = Color(0xFFF7AE00);
+  static Color primary({bool isMale = true, bool isStart = false}) {
+    if (isStart) {
+      return const Color(0xFFF58B1B);
+    }
+    return isMale ? primaryMale : primaryFemale;
+  }
+
+  static const Color primaryMale = Color(0xFF2196F3); // Blue for male
+  static const Color primaryFemale = Color(0xFFE91E63); // Pink for female
+  // static const Color lightPrimary = Color(0xFFF7AE00);
   // static const Color white = Colors.white;
   static const Color white = Color(0xffffffff);
   static const Color black = Colors.black;
