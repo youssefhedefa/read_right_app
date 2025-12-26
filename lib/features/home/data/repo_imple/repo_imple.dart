@@ -47,11 +47,17 @@ class HomeRepoImple extends HomeRepo {
   }
 
   @override
-  Future<Either<Failure, List<BooksEntity>>> getNewestBooks(
-      {required Locale locale}) async {
+  Future<Either<Failure, List<BooksEntity>>> getNewestBooks({
+    required Locale locale,
+    bool loadAll = false,
+  }) async {
     try {
-      final booksJson = await localDataSource.loadJsonFile(locale: locale);
-      log("booksJson: $booksJson");
+      late List<Map<String, dynamic>> booksJson;
+      if (loadAll) {
+        booksJson = await localDataSource.loadAllJsonFile(locale: locale);
+      } else {
+        booksJson = await localDataSource.loadJsonFile(locale: locale);
+      }
       final books = booksJson.map((e) => BookModel.fromJson(e)).toList();
       return Right(getBookBasedOnLocal(
           local: locale.languageCode, books: books, hasLimit: false));

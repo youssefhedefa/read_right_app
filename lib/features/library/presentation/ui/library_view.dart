@@ -31,21 +31,27 @@ class LibraryView extends StatelessWidget {
             );
           }
           if (state is GetSavedBooksSuccess) {
-            return ListView.builder(
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              itemBuilder: (context, index) => VerticalListBookItem(
-                image: state.books[index].image,
-                title: state.books[index].title,
-                authorName: state.books[index].genre,
-                id: state.books[index].id,
-                description: state.books[index].description,
-                onTap: () {
-                  Navigator.pushNamed(context, AppRoutingConstances.bookDetails, arguments: state.books[index]);
-                },
-              ),
-              itemCount:
-                  context.read<ProfileCubit>().state.bookList?.length ?? 0,
-            );
+            try {
+              return ListView.builder(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                itemBuilder: (context, index) => VerticalListBookItem(
+                  image: state.books[index].image,
+                  title: state.books[index].title,
+                  authorName: state.books[index].genre,
+                  id: state.books[index].id,
+                  description: state.books[index].description,
+                  onTap: () {
+                    Navigator.pushNamed(
+                        context, AppRoutingConstances.bookDetails,
+                        arguments: state.books[index]);
+                  },
+                ),
+                itemCount:
+                    context.read<ProfileCubit>().state.bookList?.length ?? 0,
+              );
+            } catch (e) {
+              return const SizedBox();
+            }
           }
           return const SizedBox();
         });
