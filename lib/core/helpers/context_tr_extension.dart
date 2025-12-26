@@ -70,4 +70,18 @@ extension translation on BuildContext {
   String get originalWords => tr('original_words');
   String get comparisonWords => tr('comparison_words');
   String get wordsSavedSuccessfully => tr('words_saved_successfully');
+  String get takeQuiz => tr('take_quiz');
+  String get quiz => tr('quiz');
+  String get noQuestionsAvailable => tr('no_questions_available');
+  String get question => tr('question');
+  String get score => tr('score');
+  String get submitAnswer => tr('submit_answer');
+  String get correctAnswer => tr('correct_answer');
+  String get wrongAnswer => tr('wrong_answer');
+  String get nextQuestion => tr('next_question');
+  String get finishQuiz => tr('finish_quiz');
+  String get quizCompleted => tr('quiz_completed');
+  String get yourScore => tr('your_score');
+  String get retryQuiz => tr('retry_quiz');
+  String get backToBook => tr('back_to_book');
 }

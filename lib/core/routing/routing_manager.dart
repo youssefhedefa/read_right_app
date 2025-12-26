@@ -16,6 +16,7 @@ import 'package:read_right/features/home/presentation/manager/all_books_view_cub
 import 'package:read_right/features/home/presentation/ui/all_books_view.dart';
 import 'package:read_right/features/home/presentation/ui/book_content.dart';
 import 'package:read_right/features/home/presentation/ui/book_details_view.dart';
+import 'package:read_right/features/home/presentation/ui/book_quiz_view.dart';
 
 class AppRoutingManager {
   Route? onGenerateRoute(RouteSettings settings) {
@@ -42,20 +43,22 @@ class AppRoutingManager {
           axisDirection: AxisDirection.left,
           child: BlocProvider(
             create: (context) => getIt<PreSettingCubit>(),
-              child: Scaffold(
-                body: PreSettingView(
-                  password: params['password'] as String,
-                  email: params['email'] as String,
-                ),
+            child: Scaffold(
+              body: PreSettingView(
+                password: params['password'] as String,
+                email: params['email'] as String,
               ),
+            ),
           ),
         );
       case AppRoutingConstances.appManager:
         return CustomPageRoute(
           axisDirection: AxisDirection.left,
           child: BlocProvider(
-            create: (context) => getIt<ProfileCubit>()..getProfileData()..fetchUserSavedBooks(),
-              child: const AppManagerView(),
+            create: (context) => getIt<ProfileCubit>()
+              ..getProfileData()
+              ..fetchUserSavedBooks(),
+            child: const AppManagerView(),
           ),
         );
       case AppRoutingConstances.allBooks:
@@ -65,10 +68,13 @@ class AppRoutingManager {
           child: MultiBlocProvider(
             providers: [
               BlocProvider(
-                create: (context) => getIt<ProfileCubit>()..getProfileData()..fetchUserSavedBooks(),
+                create: (context) => getIt<ProfileCubit>()
+                  ..getProfileData()
+                  ..fetchUserSavedBooks(),
               ),
               BlocProvider(
-                create: (context) => BooksViewCubit(books: books)..setBooks(books),
+                create: (context) =>
+                    BooksViewCubit(books: books)..setBooks(books),
               ),
             ],
             child: AllBooksView(
@@ -92,6 +98,15 @@ class AppRoutingManager {
             body: BookContentScreen(
               content: content,
             ),
+          ),
+        );
+      case AppRoutingConstances.bookQuiz:
+        final args = settings.arguments as Map<String, dynamic>;
+        return CustomPageRoute(
+          axisDirection: AxisDirection.left,
+          child: BookQuizView(
+            questions: args['questions'],
+            bookTitle: args['bookTitle'],
           ),
         );
       default:

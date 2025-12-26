@@ -34,7 +34,7 @@ class BookDetailsView extends StatelessWidget {
           },
         ),
         backgroundColor: AppColorHelper.primary(
-          isMale: context.read<ThemeCubit>().state.gender.isMale,
+          isMale: context.read<ThemeCubit>().state.isMale,
         ),
       ),
       body: SingleChildScrollView(
@@ -101,6 +101,22 @@ class BookDetailsView extends StatelessWidget {
                     );
                   },
                   label: context.watchVideo,
+                  isLoading: false,
+                ),
+              const SizedBox(height: 12),
+              if (book.questions.isNotEmpty)
+                CustomButton(
+                  onPressed: () {
+                    Navigator.pushNamed(
+                      context,
+                      AppRoutingConstances.bookQuiz,
+                      arguments: {
+                        'questions': book.questions,
+                        'bookTitle': book.title,
+                      },
+                    );
+                  },
+                  label: context.takeQuiz,
                   isLoading: false,
                 ),
             ],

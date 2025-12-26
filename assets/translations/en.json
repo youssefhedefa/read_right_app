@@ -62,5 +62,19 @@
     "save": "Save",
     "original_words" : "Original Words",
     "comparison_words" : "Comparison Words",
-  "words_saved_successfully": "Words saved successfully"
+  "words_saved_successfully": "Words saved successfully",
+  "take_quiz": "Take Quiz",
+  "quiz": "Quiz",
+  "no_questions_available": "No questions available for this book",
+  "question": "Question",
+  "score": "Score",
+  "submit_answer": "Submit Answer",
+  "correct_answer": "Correct! Great job!",
+  "wrong_answer": "Wrong! Try again next time.",
+  "next_question": "Next Question",
+  "finish_quiz": "Finish Quiz",
+  "quiz_completed": "Quiz Completed!",
+  "your_score": "Your Score",
+  "retry_quiz": "Retry Quiz",
+  "back_to_book": "Back to Book"
 }

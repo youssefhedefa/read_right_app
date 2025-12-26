@@ -62,6 +62,20 @@
   "save": "حفظ",
   "original_words" : "الكلمات الاصليه",
     "comparison_words" : "الكلمات المقارنه",
-  "words_saved_successfully" : "تم حفظ الكلمات بنجاح"
+  "words_saved_successfully" : "تم حفظ الكلمات بنجاح",
+  "take_quiz": "خذ الاختبار",
+  "quiz": "اختبار",
+  "no_questions_available": "لا توجد أسئلة متاحة لهذا الكتاب",
+  "question": "سؤال",
+  "score": "النتيجة",
+  "submit_answer": "إرسال الإجابة",
+  "correct_answer": "صحيح! عمل رائع!",
+  "wrong_answer": "خطأ! حاول مرة أخرى.",
+  "next_question": "السؤال التالي",
+  "finish_quiz": "إنهاء الاختبار",
+  "quiz_completed": "اكتمل الاختبار!",
+  "your_score": "نتيجتك",
+  "retry_quiz": "إعادة الاختبار",
+  "back_to_book": "العودة إلى الكتاب"
 
 }

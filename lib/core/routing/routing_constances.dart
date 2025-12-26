@@ -6,4 +6,5 @@ abstract class AppRoutingConstances{
   static const String allBooks = '/allBooks';
   static const String bookDetails = '/bookDetails';
   static const String bookContent = '/bookContent';
+  static const String bookQuiz = '/bookQuiz';
 }
