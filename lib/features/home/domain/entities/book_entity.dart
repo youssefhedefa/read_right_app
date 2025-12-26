@@ -1,4 +1,6 @@
-class BooksEntity{
+import 'package:read_right/features/home/data/models/question_model.dart';
+
+class BooksEntity {
   final int id;
   final String image;
   final String title;
@@ -6,6 +8,7 @@ class BooksEntity{
   final String genre;
   final String content;
   final String url;
+  final List<QuestionModel> questions;
 
   BooksEntity({
     required this.id,
@@ -15,6 +18,6 @@ class BooksEntity{
     required this.genre,
     required this.content,
     required this.url,
+    required this.questions,
   });
-
 }

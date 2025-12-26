@@ -1,3 +1,4 @@
+import 'package:read_right/features/home/data/models/question_model.dart';
 import 'package:read_right/features/home/domain/entities/book_entity.dart';
 
 class BookModel {
@@ -8,6 +9,7 @@ class BookModel {
   final String description;
   final String content;
   final String? url;
+  final List<QuestionModel> questions;
 
   BookModel({
     required this.id,
@@ -17,6 +19,7 @@ class BookModel {
     required this.description,
     required this.content,
     this.url,
+    this.questions = const [],
   });
 
   factory BookModel.fromJson(Map<String, dynamic> json) {
@@ -30,6 +33,10 @@ class BookModel {
       description: json['description'] ?? '',
       content: json['content'] ?? '',
       url: json['url'],
+      questions: json['questions'] != null
+          ? List<QuestionModel>.from(
+              json['questions'].map((q) => QuestionModel.fromJson(q)))
+          : [],
     );
   }
 
@@ -42,45 +49,17 @@ class BookModel {
       'description': description,
       'content': content,
       if (url != null) 'url': url,
+      'questions': questions
+          .map((q) => {
+                'question': q.question,
+                'choices': q.options,
+                'answer': q.answer,
+                if (q.image != null) 'image': q.image,
+              })
+          .toList(),
     };
   }
 }
-
-// class LanguageContent {
-//   final String title;
-//   final String author;
-//   final String genre;
-//   final String description;
-//   final String content;
-//
-//   LanguageContent({
-//     required this.title,
-//     required this.author,
-//     required this.genre,
-//     required this.description,
-//     required this.content,
-//   });
-//
-//   factory LanguageContent.fromBookModel(BookModel model) {
-//     return LanguageContent(
-//       title: model.title,
-//       author: '', // Author is no longer in the new JSON structure
-//       genre: model.genre.join(', '),
-//       description: model.description,
-//       content: model.content,
-//     );
-//   }
-//
-//   Map<String, dynamic> toJson() {
-//     return {
-//       'title': title,
-//       'author': author,
-//       'genre': genre,
-//       'description': description,
-//       'content': content,
-//     };
-//   }
-// }
 
 abstract class BookEntityMapper{
   static BooksEntity toEntity(BookModel model){
@@ -92,6 +71,7 @@ abstract class BookEntityMapper{
       genre: model.genre.join(', '),
       content: model.content,
       url: model.url ?? '',
+      questions: model.questions,
     );
   }
 }
