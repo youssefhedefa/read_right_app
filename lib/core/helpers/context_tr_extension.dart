@@ -48,6 +48,7 @@ extension translation on BuildContext {
   String get allBooks => tr('all_books');
   String get childrenLitre => tr('children_litre');
   String get readNow => tr('read_now');
+  String get watchVideo => tr('watch_video');
   String get title => tr('title');
   String get author => tr('author');
   String get category => tr('category');

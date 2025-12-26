@@ -5,7 +5,14 @@ import 'package:read_right/core/helpers/text_style_helper.dart';
 import 'package:read_right/features/home/presentation/ui/widgets/title_mark_widget.dart';
 
 class HorizontalListBookItem extends StatelessWidget {
-  const HorizontalListBookItem({super.key, required this.height, required this.title, required this.authorName, required this.imageUrl, required this.onTap, required this.bookId});
+  const HorizontalListBookItem(
+      {super.key,
+      required this.height,
+      required this.title,
+      required this.authorName,
+      required this.imageUrl,
+      required this.onTap,
+      required this.bookId});
 
   final double height;
   final String title;
@@ -71,6 +78,8 @@ class HorizontalListBookItem extends StatelessWidget {
                       style: AppTextStyleHelper.font16MediumBlack.copyWith(
                         color: AppColorHelper.grey,
                       ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ],
                 ),
@@ -82,5 +91,3 @@ class HorizontalListBookItem extends StatelessWidget {
     );
   }
 }
-
-

@@ -29,7 +29,6 @@ dependencies:
   json_annotation: any
   font_awesome_flutter: ^10.8.0
   dartz: ^0.10.1
-  assemblyai_flutter_sdk: ^0.0.10
   audio_waveforms: ^1.1.1
   audioplayers: ^6.1.0
   supabase_flutter: ^2.8.1
@@ -39,6 +38,9 @@ dependencies:
   image_picker: ^1.1.2
   flutter_tts: ^4.2.0
   shared_preferences: ^2.2.2
+  youtube_player_flutter: ^9.0.3
+  speech_to_text: ^7.3.0
+  assemblyai_flutter_sdk: ^0.0.10
 
 
 dev_dependencies:

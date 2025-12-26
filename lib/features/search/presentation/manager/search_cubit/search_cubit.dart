@@ -34,7 +34,9 @@ class SearchCubit extends Cubit<SearchState> {
           //filter books by query
           books = books
               .where((book) =>
-                  book.local.title.toLowerCase().contains(query.toLowerCase()) || book.local.author.toLowerCase().contains(query.toLowerCase()) || book.local.genre.toLowerCase().contains(query.toLowerCase()) || book.local.description.toLowerCase().contains(query.toLowerCase()))
+                  book.title.toLowerCase().contains(query.toLowerCase()) ||
+                  book.genre.toLowerCase().contains(query.toLowerCase()) ||
+                  book.description.toLowerCase().contains(query.toLowerCase()))
               .toList();
           emit(
             state.copyWith(

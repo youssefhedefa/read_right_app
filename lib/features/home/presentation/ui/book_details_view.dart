@@ -9,6 +9,7 @@ import 'package:read_right/core/routing/routing_constances.dart';
 import 'package:read_right/core/theme/theme_cubit.dart';
 import 'package:read_right/core/theme/theme_state.dart';
 import 'package:read_right/features/home/domain/entities/book_entity.dart';
+import 'package:read_right/features/home/presentation/ui/youtube_player_view.dart';
 
 class BookDetailsView extends StatelessWidget {
   const BookDetailsView({super.key, required this.book});
@@ -20,7 +21,7 @@ class BookDetailsView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          book.local.title,
+          book.title,
           style: AppTextStyleHelper.font16MediumWhite,
         ),
         leading: IconButton(
@@ -53,34 +54,55 @@ class BookDetailsView extends StatelessWidget {
               ),
               addDivider(),
               Text(
-                "${context.title}: ${book.local.title}",
+                "${context.title}: ${book.title}",
                 style: AppTextStyleHelper.font16MediumBlack,
               ),
-              Text(
-                "${context.author}: ${book.local.author}",
-                style: AppTextStyleHelper.font14RegularBlack,
-              ),
+              // Text(
+              //   "${context.author}: ${book.author}",
+              //   style: AppTextStyleHelper.font14RegularBlack,
+              // ),
               addDivider(),
               Text(
-                "${context.category}: ${book.local.genre}",
+                "${context.category}: ${book.genre}",
                 style: AppTextStyleHelper.font14RegularBlack,
               ),
               const SizedBox(
                 height: 10,
               ),
               Text(
-                "${context.description}: ${book.local.description}",
+                "${context.description}: ${book.description}",
                 style: AppTextStyleHelper.font14RegularBlack,
               ),
               addDivider(),
               CustomButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, AppRoutingConstances.bookContent,
-                      arguments: book.local.content);
+                  Navigator.pushNamed(
+                    context,
+                    AppRoutingConstances.bookContent,
+                    arguments: book.content,
+                  );
                 },
                 label: context.readNow,
                 isLoading: false,
               ),
+              const SizedBox(height: 12),
+              if (book.url.isNotEmpty)
+                CustomButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => YouTubePlayerView(
+                          videoUrl: book.url,
+                          title: book.title,
+                          description: book.description,
+                        ),
+                      ),
+                    );
+                  },
+                  label: context.watchVideo,
+                  isLoading: false,
+                ),
             ],
           ),
         ),

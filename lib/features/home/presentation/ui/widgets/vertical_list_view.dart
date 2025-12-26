@@ -19,35 +19,35 @@ class VerticalListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<BooksViewCubit,BooksViewState>(
-      builder: (context,state) {
-        return Column(
-          children: [
-            CategoriesHeadBar(
-              currentView: state.viewState,
-            ),
-            Expanded(
-              child: ListView.separated(
-                itemBuilder: (context, index) => VerticalListBookItem(
-                  id: state.books[index].id,
-                  title: state.books[index].local.title,
-                  authorName: state.books[index].local.author,
-                  image: state.books[index].image,
-                  description: state.books[index].local.description,
-                  onTap: () {
-                    Navigator.pushNamed(context, AppRoutingConstances.bookDetails, arguments: state.books[index]);
-                  },
-                ),
-                separatorBuilder: (context, index) => const SizedBox(
-                  height: 16,
-                ),
-                itemCount: state.books.length,
+    return BlocBuilder<BooksViewCubit, BooksViewState>(
+        builder: (context, state) {
+      return Column(
+        children: [
+          CategoriesHeadBar(
+            currentView: state.viewState,
+          ),
+          Expanded(
+            child: ListView.separated(
+              itemBuilder: (context, index) => VerticalListBookItem(
+                id: state.books[index].id,
+                title: state.books[index].title,
+                authorName: state.books[index].genre,
+                image: state.books[index].image,
+                description: state.books[index].description,
+                onTap: () {
+                  Navigator.pushNamed(context, AppRoutingConstances.bookDetails,
+                      arguments: state.books[index]);
+                },
               ),
+              separatorBuilder: (context, index) => const SizedBox(
+                height: 16,
+              ),
+              itemCount: state.books.length,
             ),
-          ],
-        );
-      }
-    );
+          ),
+        ],
+      );
+    });
   }
 }
 
@@ -65,9 +65,13 @@ class CategoriesHeadBar extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) => CategoryItem(
           isSelected: AppConstances.categories[index].viewState == currentView,
-          title: context.locale.languageCode == 'en' ? AppConstances.categories[index].enName : AppConstances.categories[index].arName,
+          title: context.locale.languageCode == 'en'
+              ? AppConstances.categories[index].enName
+              : AppConstances.categories[index].arName,
           onPressed: () {
-            context.read<BooksViewCubit>().changeView(AppConstances.categories[index].viewState);
+            context
+                .read<BooksViewCubit>()
+                .changeView(AppConstances.categories[index].viewState);
           },
         ),
         separatorBuilder: (context, index) => const SizedBox(
@@ -77,13 +81,16 @@ class CategoriesHeadBar extends StatelessWidget {
       ),
     );
   }
-  checkCurrentView() {
 
-  }
+  checkCurrentView() {}
 }
 
 class CategoryItem extends StatelessWidget {
-  const CategoryItem({super.key, required this.isSelected, required this.title, required this.onPressed});
+  const CategoryItem(
+      {super.key,
+      required this.isSelected,
+      required this.title,
+      required this.onPressed});
 
   final bool isSelected;
   final String title;
@@ -102,15 +109,17 @@ class CategoryItem extends StatelessWidget {
               isMale: context.read<ThemeCubit>().state.gender.isMale,
             ),
           ),
-          color: isSelected ?AppColorHelper.primary(
-            isMale: context.read<ThemeCubit>().state.gender.isMale,
-          ) : Colors.transparent,
+          color: isSelected
+              ? AppColorHelper.primary(
+                  isMale: context.read<ThemeCubit>().state.gender.isMale,
+                )
+              : Colors.transparent,
         ),
         child: Center(
           child: Text(
             title,
             style: TextStyle(
-              color: isSelected ? AppColorHelper.white: Colors.black,
+              color: isSelected ? AppColorHelper.white : Colors.black,
               fontSize: 16,
               fontWeight: FontWeight.w500,
             ),

@@ -25,6 +25,8 @@ class _CustomTitleAndMarkWidgetState extends State<CustomTitleAndMarkWidget> {
           child: Text(
             widget.title,
             style: AppTextStyleHelper.font16MediumBlack,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
           ),
         ),
         BlocBuilder<ProfileCubit, ProfileDataState>(

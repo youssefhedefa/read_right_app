@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:assemblyai_flutter_sdk/assemblyai_flutter_sdk.dart';
 
 class AssemblyAiHelper {
-  final assApi = AssemblyAI('3f2af4a5c112490796e4f5d8583ce896');
+  final assApi = AssemblyAI('68021e31c46b437f8c43c9af005f424e');
 
   Future<String> makeRequest(
       {required String audioUrl, required Locale locale}) async {

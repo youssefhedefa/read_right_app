@@ -1,10 +1,20 @@
-import 'package:read_right/features/home/data/models/book_model.dart';
-
 class BooksEntity{
   final int id;
-  final int year;
   final String image;
-  final LanguageContent local;
+  final String title;
+  final String description;
+  final String genre;
+  final String content;
+  final String url;
 
-  BooksEntity({required this.id, required this.year, required this.image, required this.local});
+  BooksEntity({
+    required this.id,
+    required this.image,
+    required this.title,
+    required this.description,
+    required this.genre,
+    required this.content,
+    required this.url,
+  });
+
 }

@@ -26,8 +26,8 @@ class HorizontalBookList extends StatelessWidget {
             },
             bookId: books[index].id,
             height: 280.h,
-            title: books[index].local.title,
-            authorName: books[index].local.author,
+            title: books[index].title,
+            authorName: books[index].genre,
             imageUrl: books[index].image,
           );
         },

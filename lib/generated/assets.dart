@@ -2,7 +2,9 @@
 class Assets {
   Assets._();
 
+  static const String booksArBooks = 'assets/books/ar_books.json';
   static const String booksBooks = 'assets/books/books.json';
+  static const String booksEnBooks = 'assets/books/en_books.json';
   static const String fontsRubikBlack = 'assets/fonts/Rubik-Black.ttf';
   static const String fontsRubikBold = 'assets/fonts/Rubik-Bold.ttf';
   static const String fontsRubikExtraBold = 'assets/fonts/Rubik-ExtraBold.ttf';

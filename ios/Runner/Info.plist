@@ -50,5 +50,9 @@
     	<string>en</string>
     	<string>nb</string>
     </array>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This app needs access to your microphone to record and analyze your reading.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>This app needs speech recognition to analyze your reading.</string>
 </dict>
 </plist>

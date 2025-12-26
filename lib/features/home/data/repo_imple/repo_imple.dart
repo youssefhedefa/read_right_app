@@ -5,6 +5,7 @@ import 'package:dartz/dartz.dart';
 import 'package:read_right/core/networking/models/error_model.dart';
 import 'package:read_right/features/app_auth/data/data_source/auth_data_source.dart';
 import 'package:read_right/features/home/data/data_source/assemblu_ai_helper.dart';
+import 'package:read_right/features/home/data/data_source/speech_to_text_helper.dart';
 import 'package:read_right/features/home/data/data_source/local_data_source.dart';
 import 'package:read_right/core/networking/remote_data_source/remote_data_source.dart';
 import 'package:read_right/features/home/data/models/book_model.dart';
@@ -28,11 +29,12 @@ class HomeRepoImple extends HomeRepo {
   Future<Either<Failure, List<BooksEntity>>> getRecommendedBooks(
       {required Locale locale}) async {
     try {
-      final booksJson = await localDataSource.loadJsonFile();
+      final booksJson = await localDataSource.loadJsonFile(locale: locale);
       final books = booksJson.map((e) => BookModel.fromJson(e)).toList();
       return Right(getBookBasedOnLocal(
           local: locale.languageCode, books: books, hasLimit: true));
     } catch (e) {
+      log('Error in getRecommendedBooks: $e');
       return Left(
         Failure(
           error: ErrorModel(
@@ -48,7 +50,7 @@ class HomeRepoImple extends HomeRepo {
   Future<Either<Failure, List<BooksEntity>>> getNewestBooks(
       {required Locale locale}) async {
     try {
-      final booksJson = await localDataSource.loadJsonFile();
+      final booksJson = await localDataSource.loadJsonFile(locale: locale);
       log("booksJson: $booksJson");
       final books = booksJson.map((e) => BookModel.fromJson(e)).toList();
       return Right(getBookBasedOnLocal(
@@ -69,23 +71,11 @@ class HomeRepoImple extends HomeRepo {
       {required String local,
       required List<BookModel> books,
       required bool hasLimit}) {
-    switch (local) {
-      case "en":
-        List<BooksEntity> booksEntity = books.map((book) {
-          return BookEntityMapper.toEnglishEntity(book);
-        }).toList();
-        return hasLimit ? booksEntity.sublist(5, 10) : booksEntity;
-      case "ar":
-        List<BooksEntity> booksEntity = books.map((book) {
-          return BookEntityMapper.toArabicEntity(book);
-        }).toList();
-        return hasLimit ? booksEntity.sublist(5, 10) : booksEntity;
-      default:
-        List<BooksEntity> booksEntity = books.map((book) {
-          return BookEntityMapper.toEnglishEntity(book);
-        }).toList();
-        return hasLimit ? booksEntity.sublist(5, 10) : booksEntity;
-    }
+    List<BooksEntity> booksEntity = books.map((book) {
+      return BookEntityMapper.toEntity(book);
+    }).toList();
+
+    return hasLimit ? booksEntity.sublist(4, 7) : booksEntity;
   }
 
   @override
@@ -107,7 +97,7 @@ class HomeRepoImple extends HomeRepo {
         Failure(
           error: ErrorModel(
             status: "400",
-            message: "Error in getting transcription",
+            message: "Error in getting transcription: ${e.toString()}",
           ),
         ),
       );

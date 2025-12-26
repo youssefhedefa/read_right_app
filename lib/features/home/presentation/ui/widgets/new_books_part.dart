@@ -42,10 +42,10 @@ class NewBooksPart extends StatelessWidget {
                       .map(
                         (book) => VerticalListBookItem(
                       id: book.id,
-                      title: book.local.title,
-                      authorName: book.local.author,
+                      title: book.title,
+                      authorName: book.genre,
                       image: book.image,
-                      description: book.local.description,
+                      description: book.description,
                       onTap: () {
                         Navigator.pushNamed(context, AppRoutingConstances.bookDetails, arguments: book);
                       },

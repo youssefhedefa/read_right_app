@@ -102,8 +102,5 @@ Future<void> setupDependencyInjection() async {
   );
 
   getIt.registerFactory<GetSavedBooksCubit>(
-      ()=> GetSavedBooksCubit(
-        repo: getIt<HomeRepo>()
-      )
-  );
+      () => GetSavedBooksCubit(repo: getIt<HomeRepo>()));
 }

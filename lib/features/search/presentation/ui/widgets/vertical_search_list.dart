@@ -14,10 +14,10 @@ class VerticalSearchList extends StatelessWidget {
       child: ListView.separated(
         itemBuilder: (context, index) => VerticalListBookItem(
           id: books[index].id,
-          title: books[index].local.title,
-          authorName: books[index].local.author,
+          title: books[index].title,
+          authorName: books[index].genre,
           image: books[index].image,
-          description: books[index].local.description,
+          description: books[index].description,
           onTap: () {
             Navigator.pushNamed(context, AppRoutingConstances.bookDetails, arguments: books[index]);
           },

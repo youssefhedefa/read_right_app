@@ -5,7 +5,7 @@ enum CheckRecordEnum {
   error,
 }
 
-class CheckRecordState{
+class CheckRecordState {
   final CheckRecordEnum state;
   final String? error;
   final String? success;
@@ -24,4 +24,8 @@ class CheckRecordState{
     );
   }
 
+  @override
+  String toString() {
+    return 'CheckRecordState(state: $state, error: $error, success: $success)';
+  }
 }
