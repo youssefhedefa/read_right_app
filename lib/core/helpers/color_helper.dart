@@ -4,7 +4,7 @@ abstract class AppColorHelper {
   // static const Color primary = Color(0xFFB44343);
   static Color primary({bool isMale = true, bool isStart = false}) {
     if (isStart) {
-      return const Color(0xFFF58B1B);
+      return const Color(0xFFC35721);
     }
     return isMale ? primaryMale : primaryFemale;
   }

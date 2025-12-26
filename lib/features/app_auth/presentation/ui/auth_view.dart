@@ -18,8 +18,14 @@ class AuthView extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            SizedBox(
+              height: MediaQuery.of(context).padding.top,
+            ),
             Image.asset(
               AppImageHelper.authImage,
+              width: double.infinity,
+              height: 300,
+              fit: BoxFit.fill,
             ),
             const SizedBox(
               height: 20,
